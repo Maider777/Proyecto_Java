@@ -1,0 +1,136 @@
+package modelo;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+
+import conexion.BBDD;
+import entidades.Alumno;
+import entidades.Grupo;
+import entidades.Nota;
+
+public class NotaModelo {
+
+	// crear nota
+	public static void insertNota(Nota nota) {
+		// crear el objeto de la BBDD
+		BBDD bd = new BBDD();
+		// conectar a la BBDD
+		bd.conectar();
+		// obtener la conexion
+		Connection conexion = bd.getConnection();
+		// Statement para crear la query
+		Statement s;
+		try {
+			s = conexion.createStatement();
+			// hacer un insert
+			String values="";
+			if (nota.getAlumno() == null) {
+				values += ", null ";
+			} else {
+				values += "'" + nota.getAlumno().getId() + "'";
+			}
+			if (nota.getAsignatura() == null) {
+				values += ", null";
+			} else {
+				values += ",'" + nota.getAsignatura() + "'";
+			}
+			if (nota.getNotaGlobal() == 0) {
+				values += " null ";
+			} else {
+				values += ",'" + nota.getNotaGlobal() + "'";
+			}
+			// al hacer consulta, poner variables de la BBDD
+			String query = "insert into notas (idAlumno,asignatura,notaGlobal) values (" + values + ")";
+			System.out.println(query);
+			s.executeUpdate(query);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}finally {
+			bd.desconectar();
+		}
+	}
+
+	// mostrar todas las notas
+	public static ArrayList<Nota> findNotas(Alumno alumno, String asignatura, float notaGlobal) {
+		// crear el objeto de la BBDD
+		BBDD bd = new BBDD();
+		// conectar a la BBDD
+		bd.conectar();
+		// obtener la conexion
+		Connection conexion = bd.getConnection();
+		// Statement para crear la query
+		Statement s;
+		ArrayList<Nota> resultado;
+		try {
+			s = conexion.createStatement();
+			String filtro = "";
+			if (alumno != null) {
+				filtro += " idAlumno='" + alumno.getId() + "'";
+			}
+			if (asignatura != null) {
+				if(!filtro.isEmpty()) {
+					filtro+=" AND ";
+				}
+				filtro += " asignatura=" + asignatura;
+			}
+			if (notaGlobal != 0) {
+				if(!filtro.isEmpty()) {
+					filtro+=" AND ";
+				}
+				filtro += " notaGlobal='" + notaGlobal + "'";
+			}
+
+			if (alumno != null || asignatura != null || notaGlobal != 0) {
+				filtro = " where " + filtro;
+			}
+			// hacer un select
+			// al hacer consulta, poner variables de la BBDD
+			String query = "select * from notas" + filtro;
+			System.out.println(query);
+			ResultSet res = s.executeQuery(query);
+			resultado = new ArrayList<Nota>();
+			while (res.next()) {
+				int alumnoIdRes=Integer.parseInt(res.getString("alumno"));
+				String asignaturaRes = res.getString("asignatura");
+				float notaGlobalRes = res.getFloat("notaGlobal");
+				ArrayList<Alumno> arrayAlumnos = AlumnoModelo.findAlumno(alumnoIdRes, null, null, null);
+				Alumno alumnobd = null;
+				
+				if(alumnoIdRes==0) {
+					
+				}
+				
+				if(arrayAlumnos.size()!=0) {
+					alumnobd = arrayAlumnos.get(0);
+				}
+				Nota notaBD = new Nota(alumnobd, asignaturaRes, notaGlobalRes);
+				resultado.add(notaBD);
+				
+				if (idGrupoRes == null) {
+					grupo = null;
+				} else {
+					ArrayList<Grupo> grupos = GrupoModelo.findGrupos(idGrupoRes, 0, null);
+					if (grupos.size() > 0) {
+						grupo = grupos.get(0);
+					} else {
+						grupo = null;
+					}
+				}
+				Alumno alumnoBD = new Alumno(idRes, nombreRes, apellido1Res, apellido2Res, dniRes, direccionRes,
+						fechaDeNacimientoRes, nombreDeTutor1Res, nombreDeTutor2Res, numeroDeTelefonoTutor1Res,
+						numeroDeTelefonoTutor2Res, grupo);
+				resultado.add(alumnoBD);
+				
+			}
+			return resultado;
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+			return null;
+		}finally {
+			bd.desconectar();
+		}
+	}
+}

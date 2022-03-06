@@ -1,0 +1,35 @@
+package logica;
+
+import java.util.ArrayList;
+
+import entidades.Alumno;
+import entidades.Grupo;
+import entidades.Nota;
+import modelo.GrupoModelo;
+import modelo.NotaModelo;
+
+public class NotaLogica {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+	//obtener todas las notas
+	public static ArrayList<Nota> obtenerTodasNotas() {
+		return NotaModelo.findNotas(null, null, 0);
+	}
+
+	//guardar notas
+	public static Nota guardarNota(Alumno alumno) {
+		//TODO Llamar a findNota para saber si tiene la nota insertada
+		ArrayList<Nota> notas = NotaModelo.findNotas(alumno, null, 0);
+		// devolver ya sea nulo o no
+		if (notas.size() == 0) {
+			return null;
+		} else {
+			return notas.get(0);
+		}
+	}
+
+}

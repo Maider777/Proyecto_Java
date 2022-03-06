@@ -1,0 +1,78 @@
+package vista;
+
+import java.awt.Container;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class FrameEmailAlumno extends JFrame {
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		JFrame framePrincipal=new FrameEmailAlumno();
+		framePrincipal.setVisible(true);
+	}
+
+	public FrameEmailAlumno() {
+		super("Enviar email");
+		this.setSize(800, 250);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		Container contenedor = getContentPane();
+
+		//GridLayout para poner por filas y columnas
+		//como parametro, se le pasan primero las filas y luego las columnas
+		GridLayout glt=new GridLayout(4,1);
+		contenedor.setLayout(glt);
+		
+		JPanel panelDestinatario=new JPanel();
+        JLabel destinatario=new JLabel();
+        destinatario.setText("Destinatario ");
+        panelDestinatario.add(destinatario);	
+        JTextField textoDestinatario=new JTextField(30);
+        panelDestinatario.add(textoDestinatario);
+        contenedor.add(panelDestinatario);
+        
+        JPanel panelAsunto=new JPanel();
+        JLabel asunto=new JLabel();
+        asunto.setText("Asunto ");
+        panelAsunto.add(asunto);		
+        JTextField textoAsunto=new JTextField(30);
+        panelAsunto.add(textoAsunto);
+        contenedor.add(panelAsunto);
+        
+		//crear panel con JPanel
+		JPanel panelMensaje=new JPanel();
+		//crear etiqueta con JLabel
+        JLabel mensaje=new JLabel();
+        mensaje.setText("Mensaje ");
+        panelMensaje.add(mensaje);
+        //crear area de texto con JTextField
+		JTextField textoMensaje=new JTextField(60);
+		panelMensaje.add(textoMensaje);
+		contenedor.add(panelMensaje);
+        
+        // Crear boton de enviar email
+        JPanel panelBoton=new JPanel();
+	    JButton botonEnviarEmail = new JButton("Enviar");
+	    botonEnviarEmail.addActionListener(new EventoBotonEnviarEmail());
+	    panelBoton.add(botonEnviarEmail);
+	    contenedor.add(botonEnviarEmail);
+	    
+	}
+	
+	public class EventoBotonEnviarEmail implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+			JOptionPane.showMessageDialog(null, "El mensaje ha sido enviado");
+		}
+	}
+
+	
+}

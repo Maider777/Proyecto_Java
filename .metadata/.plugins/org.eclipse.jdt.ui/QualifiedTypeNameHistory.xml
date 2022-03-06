@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="modelo.AlumnoModelo"/>
+    <fullyQualifiedTypeName name="logica.NotaLogica"/>
+    <fullyQualifiedTypeName name="entidades.Nota"/>
+    <fullyQualifiedTypeName name="logica.GrupoAsignaturaLogica"/>
+    <fullyQualifiedTypeName name="entidades.GrupoAsignatura"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+</qualifiedTypeNameHistroy>

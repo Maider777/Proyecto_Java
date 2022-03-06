@@ -1,0 +1,75 @@
+package vista;
+
+import java.awt.Container;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class FrameAñadirEvento extends JFrame {
+	
+	public static void main(String[] args) {
+		JFrame framePrincipal=new FrameAñadirEvento();
+		framePrincipal.setVisible(true);
+	}
+
+	public FrameAñadirEvento() {
+		super("Añadir evento al calendario");
+		this.setSize(800, 250);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		Container contenedor = getContentPane();
+
+		//GridLayout para poner por filas y columnas
+		//como parametro, se le pasan primero las filas y luego las columnas
+		GridLayout glt=new GridLayout(4,1);
+		contenedor.setLayout(glt);
+        
+		//crear panel con JPanel
+		JPanel panelFechaEvento=new JPanel();
+		//crear etiqueta con JLabel
+        JLabel fechaEvento=new JLabel();
+        fechaEvento.setText("Fecha del evento ");
+        panelFechaEvento.add(fechaEvento);
+        //crear area de texto con JTextField
+		JTextField textoFechaEvento=new JTextField(15);
+		panelFechaEvento.add(textoFechaEvento);
+		contenedor.add(panelFechaEvento);
+		
+		JPanel panelHoraEvento=new JPanel();
+        JLabel horaEvento=new JLabel();
+        horaEvento.setText("Hora ");
+        panelHoraEvento.add(horaEvento);
+		JTextField textoHoraEvento=new JTextField(15);
+		panelHoraEvento.add(textoHoraEvento);
+		contenedor.add(panelHoraEvento);
+		
+		JPanel panelEvento=new JPanel();
+        JLabel evento=new JLabel();
+        evento.setText("Descripción ");
+        panelEvento.add(evento);
+		JTextField textoEvento=new JTextField(15);
+		panelEvento.add(textoEvento);
+		contenedor.add(panelEvento);
+        
+        // Crear boton de matricular alumno
+        JPanel panelBoton=new JPanel();
+	    JButton botonMatricularAlumno = new JButton("Añadir evento");
+	    botonMatricularAlumno.addActionListener(new EventoAñadirEvento());
+	    panelBoton.add(botonMatricularAlumno);
+	    contenedor.add(botonMatricularAlumno);
+	    
+	}
+	
+	public class EventoAñadirEvento implements ActionListener {
+
+		public void actionPerformed(ActionEvent arg0) {
+			//System.out.println("Gracias por pulsar el boton de añadir evento");
+		}
+
+	}
+}
